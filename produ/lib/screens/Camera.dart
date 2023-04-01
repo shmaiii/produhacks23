@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
 
 import 'DisplayPictureScreen.dart';
+import 'VideoPlaying.dart';
 
 // class CameraPage extends StatelessWidget {
 //   const CameraPage({Key? key}) : super(key:key);
@@ -92,10 +93,10 @@ class _CameraScreenState extends State<CameraScreen> {
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
+                builder: (context) => VideoPlayerScreen(
                   // Pass the automatically generated path to
                   // the DisplayPictureScreen widget.
-                  imagePath: image.path,
+                  // imagePath: image.path,
                 ),
               ),
             );
