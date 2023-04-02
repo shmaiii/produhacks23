@@ -5,15 +5,21 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
-
   @override 
   State<MapScreen> createState() => MapScreenState();
 }
 
 class MapScreenState extends State<MapScreen> {
-  LatLng intialLocation = const LatLng(49.299999, -123.139999);
+  LatLng intialLocation = const LatLng(49.2707, -123.169);
   BitmapDescriptor markerIconVisited = BitmapDescriptor.defaultMarker;
   BitmapDescriptor markerIconUnvisited = BitmapDescriptor.defaultMarker;
+  bool visited = false;
+
+  void updateVisited(bool visitedAgain) {
+    setState(() {
+      visited = visitedAgain;
+    });
+  }
 
   @override 
   void initState() {
@@ -90,6 +96,29 @@ class MapScreenState extends State<MapScreen> {
       },
     );
   }
+
+  void _showDialogUnvisited7(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("The Seven Sisters"),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset("assets/images/locked.png"),
+                SizedBox(height: 16),
+                Text("This landmark is currently locked. Please visit to unlock it!"),
+
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _hideDialog() {
     Navigator.of(context).pop();
   } 
@@ -113,7 +142,7 @@ class MapScreenState extends State<MapScreen> {
                     onPressed: () async {
                       WidgetsFlutterBinding.ensureInitialized();
                       await availableCameras().then((value) => Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first))));
+                          MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first, updateVisited: updateVisited))));
                     },
                   
                 )), 
@@ -126,7 +155,7 @@ class MapScreenState extends State<MapScreen> {
             GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: intialLocation, 
-                zoom: 15,
+                zoom: 10,
                 ),
               
               // add markers
@@ -135,9 +164,10 @@ class MapScreenState extends State<MapScreen> {
                   markerId: const MarkerId("marker1"),
                   position: const LatLng(49.299999, -123.139999),
                   draggable: false,
-                  icon: markerIconVisited,
-                  onTap: () {
-                    _showDialogVisited(context);
+                  icon: visited ? markerIconVisited : markerIconUnvisited,
+                  onTap: () { visited ? 
+                    _showDialogVisited(context) :
+                    _showDialogUnvisited7(context);
                   }
                 ),
 

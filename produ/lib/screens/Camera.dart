@@ -21,8 +21,9 @@ import 'VideoPlaying.dart';
 // }
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({Key? key, required this.camera}): super(key: key);
-
+ 
+  CameraScreen({Key? key, required this.camera, required this.updateVisited}): super(key: key);
+  final Function(bool) updateVisited;
   final CameraDescription camera;
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -62,7 +63,10 @@ class _CameraScreenState extends State<CameraScreen> {
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
+      body: Container (
+        width: double.infinity,
+        height: double.infinity,
+        child: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -73,7 +77,7 @@ class _CameraScreenState extends State<CameraScreen> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      ),
+      ),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         alignment: Alignment.bottomCenter, 
@@ -88,7 +92,7 @@ class _CameraScreenState extends State<CameraScreen> {
             final image = await _controller.takePicture();
 
             if (!mounted) return;
-
+            widget.updateVisited (true);
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(

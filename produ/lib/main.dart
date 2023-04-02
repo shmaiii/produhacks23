@@ -13,7 +13,9 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  //const MyApp({super.key});
+ 
+  MyApp({super.key});
+
 
   @override 
   _MyAppState createState() => _MyAppState();
@@ -47,6 +49,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -93,3 +96,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
