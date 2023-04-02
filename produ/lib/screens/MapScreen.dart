@@ -30,7 +30,7 @@ class MapScreenState extends State<MapScreen> {
 
   void addCustomIconVisited() {
     BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(size: Size(40, 60)), 'assets/images/visitedmark.png')
+      const ImageConfiguration(size: Size(90, 100)), 'assets/images/visitedmark.png')
       .then(
         (icon) {
           setState(() {

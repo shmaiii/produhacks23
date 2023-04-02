@@ -51,6 +51,7 @@ dev_dependencies:
   camera: ^0.10.0+4
   image_picker: ^0.8.6
   google_maps_flutter: ^2.2.5
+  tflite: ^1.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,6 +68,7 @@ flutter:
   assets:
       - assets/videos/
       - assets/images/
+      - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

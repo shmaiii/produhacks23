@@ -21,7 +21,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     // Create and store the VideoPlayerController. The VideoPlayerController
     _controller = VideoPlayerController.asset(
-      'assets/videos/bee.mp4',
+      'assets/videos/ProduHacksMaiAndroidDemo.mp4',
     );
 
     // Initialize the controller and store the Future for later use.
