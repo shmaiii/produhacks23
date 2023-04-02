@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:produ/screens/Camera.dart';
 import 'package:camera/camera.dart';
 import 'screens/Camera.dart';
+import 'screens/MapScreen.dart';
 
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MapScreen(/*title: 'Flutter Demo Home Page'*/),
     );
   }
 }
@@ -57,15 +58,24 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Home Page")),
       body: SafeArea(
-        child: Center(
-            child: ElevatedButton(
-          onPressed: () async {
-            WidgetsFlutterBinding.ensureInitialized();
-            await availableCameras().then((value) => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first))));
-          },
-          child: const Text("SCAN"),
-        )),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2,),
+              borderRadius: BorderRadius.circular(50),
+            ),
+          child: IconButton(
+            icon: Icon(
+              Icons.camera_alt,
+              color: Colors.grey),
+            onPressed: () async {
+              WidgetsFlutterBinding.ensureInitialized();
+              await availableCameras().then((value) => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first))));
+            },
+          
+        ))),
       ),
     );
   }
