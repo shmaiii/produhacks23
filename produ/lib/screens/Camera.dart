@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
-
 import 'DisplayPictureScreen.dart';
 import 'VideoPlaying.dart';
 
@@ -59,7 +58,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
+      appBar: AppBar(backgroundColor: Colors.orange,),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -75,17 +74,17 @@ class _CameraScreenState extends State<CameraScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        alignment: Alignment.bottomCenter, 
+        child: FloatingActionButton(
+          backgroundColor: Colors.orange,
+        
+        onPressed: () async { 
           try {
-            // Ensure that the camera is initialized.
+            
             await _initializeControllerFuture;
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
             final image = await _controller.takePicture();
 
             if (!mounted) return;
@@ -94,19 +93,15 @@ class _CameraScreenState extends State<CameraScreen> {
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => VideoPlayerScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  // imagePath: image.path,
                 ),
               ),
             );
           } catch (e) {
-            // If an error occurs, log the error to the console.
             print(e);
           }
         },
-        child: const Icon(Icons.camera_alt),
-      ),
+        
+      ),)
     );
   }
 }

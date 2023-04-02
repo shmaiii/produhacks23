@@ -26,9 +26,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     // Initialize the controller and store the Future for later use.
     _initializeVideoPlayerFuture = _controller.initialize();
-
-    // Use the controller to loop the video.
-    _controller.setLooping(true);
+    _controller.play();
+    _controller.setLooping(false);
   }
 
   @override
@@ -42,8 +41,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Whatever Video'),
+        backgroundColor: Colors.orange,
+        // title: const Text('Whatever Video'),
       ),
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
@@ -67,25 +68,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Wrap the play or pause in a call to `setState`. This ensures the
-          // correct icon is shown.
-          setState(() {
-            // If the video is playing, pause it.
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              // If the video is paused, play it.
-              _controller.play();
-            }
-          });
-        },
-        // Display the correct icon depending on the state of the player.
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // Wrap the play or pause in a call to `setState`. This ensures the
+      //     // correct icon is shown.
+      //     setState(() {
+      //       // If the video is playing, pause it.
+      //       if (_controller.value.isPlaying) {
+      //         _controller.pause();
+      //       } else {
+      //         // If the video is paused, play it.
+      //         _controller.play();
+      //       }
+      //     });
+      //   },
+      //   // Display the correct icon depending on the state of the player.
+      //   child: Icon(
+      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      //   ),
+      // ),
     );
   }
 }
