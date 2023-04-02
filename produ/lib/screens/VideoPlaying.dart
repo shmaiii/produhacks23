@@ -21,7 +21,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     // Create and store the VideoPlayerController. The VideoPlayerController
     _controller = VideoPlayerController.asset(
-      'assets/videos/bee.mp4',
+      'assets/videos/ProduHacksMaiAndroidDemo.mp4',
     );
 
     // Initialize the controller and store the Future for later use.
@@ -40,6 +40,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double videoHeight = _controller.value.size.height;
+    final double videoWidth = _controller.value.size.width;
+    final double aspectRatio = videoHeight/videoWidth;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -54,11 +59,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the VideoPlayerController has finished initialization, use
             // the data it provides to limit the aspect ratio of the video.
-            return AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
+            return  AspectRatio(
+              aspectRatio: aspectRatio,
               // Use the VideoPlayer widget to display the video.
-              child: VideoPlayer(_controller),
-            );
+              child: Container(height: screenHeight, child: VideoPlayer(_controller),
+            ));
           } else {
             // If the VideoPlayerController is still initializing, show a
             // loading spinner.
