@@ -143,18 +143,40 @@ class MapScreenState extends State<MapScreen> {
 
                 Marker(
                   markerId: const MarkerId("marker2"),
-                  position: const LatLng(49.2807, -123.169),
+                  position: const LatLng(49.2707, -123.169),
                   icon: markerIconUnvisited,
+                  onTap: () {
+                    _showDialogUnvisited(context);
+                  }
                 ),
 
                 Marker(
                   markerId: const MarkerId("marker3"),
+                  position: const LatLng(49.2609, -123.1599),
+                  icon: markerIconUnvisited,
+                  onTap: () {
+                    _showDialogUnvisited(context);
+                  }
+                ),
+
+                Marker(
+                  markerId: const MarkerId("marker4"),
+                  position: const LatLng(49.234, -123.2233),
+                  icon: markerIconVisited,
+                  onTap: () {
+                    _showDialogVisited(context);
+                  }
+                ),
+
+                Marker(
+                  markerId: const MarkerId("marker7"),
                   position: const LatLng(49.2609, -123.200093),
                   icon: markerIconUnvisited,
                   onTap: () {
                     _showDialogUnvisited(context);
                   }
-                )
+                ),
+
               }
 
             ),
