@@ -32,6 +32,33 @@ class MapScreenState extends State<MapScreen> {
       );
   }
 
+  void _showDialog(BuildContext context) {
+    showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Text("The Seven Sisters"),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("The Seven Sisters trees were some of the tallest trees in the world. They resided in a small area in the middle of Stanley Park. When people stood among them they felt like they were in a cathedral. They were so popular that 'Cathedral Trail' was cut to help people get to them quicker. Eventually, because so many people walked on their roots they became dangerous and were cut down in the 1950s. All that remains of them is their stumps. Now, new trees have been planted in the same area, who will one day grow to be as tall as the previous seven sisters."),
+            SizedBox(height: 16),
+            Text("However, the seven sisters surrounds a Squamish legend: a stone that has no moss or lichen would dare grow on it, and splashed with jet-black spots that have eaten into the surface like an acid. The stone contains a  a “lure:” an evil spirit that has been trapped as a stone that compels people to circle around it, and then kills them. Once people come within the \"aura\" of the lure it is a human impossibility to leave it, hence being called a “lure”."),
+          ],
+        ),
+      ),
+    );
+  },
+);
+
+
+  }
+
+  void _hideDialog() {
+    Navigator.of(context).pop();
+  } 
+
   @override 
   Widget build (BuildContext context) {
     return Scaffold(
@@ -42,13 +69,16 @@ class MapScreenState extends State<MapScreen> {
             zoom: 15,
             ),
           
-
+          // add markers
           markers: {
             Marker(
               markerId: const MarkerId("marker1"),
               position: const LatLng(49.299999, -123.139999),
               draggable: false,
               icon: markerIcon,
+              onTap: () {
+                _showDialog(context);
+              }
             ),
 
             Marker(
@@ -56,29 +86,6 @@ class MapScreenState extends State<MapScreen> {
               position: const LatLng(49.299999, -123.169),)
           }
 
-          // Positioned(
-          //   top: 16,
-          //   left: 16,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       border: Border.all(color: Colors.grey, width: 2,),
-          //       borderRadius: BorderRadius.circular(50),
-          //     ),
-          //     child: IconButton(
-          //       icon: Icon(
-          //         Icons.camera_alt,
-          //         color: Colors.grey),
-          //       onPressed: () async {
-          //         WidgetsFlutterBinding.ensureInitialized();
-          //         await availableCameras().then((value) => Navigator.push(context,
-          //             MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first))));
-          //       },
-              
-          //     )
-          //   )
-          // ),
-
-        // add markers
         ),
       );
   }
