@@ -46,7 +46,7 @@ class MapScreenState extends State<MapScreen> {
       );
   }
 
-  void _showDialog(BuildContext context) {
+  void _showDialogVisited(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -69,6 +69,27 @@ class MapScreenState extends State<MapScreen> {
     );
   }
 
+  void _showDialogUnvisited(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Howling"),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset("assets/images/locked.png"),
+                SizedBox(height: 16),
+                Text("This landmark is currently locked. Please visit to unlock it!"),
+
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   void _hideDialog() {
     Navigator.of(context).pop();
   } 
@@ -76,39 +97,67 @@ class MapScreenState extends State<MapScreen> {
   @override 
   Widget build (BuildContext context) {
     return Scaffold(
-      
-        body: GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: intialLocation, 
-            zoom: 15,
-            ),
-          
-          // add markers
-          markers: {
-            Marker(
-              markerId: const MarkerId("marker1"),
-              position: const LatLng(49.299999, -123.139999),
-              draggable: false,
-              icon: markerIconVisited,
-              onTap: () {
-                _showDialog(context);
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: <Widget>[
+            
+          Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 2,),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.camera_alt,
+                      color: Colors.grey),
+                    onPressed: () async {
+                      WidgetsFlutterBinding.ensureInitialized();
+                      await availableCameras().then((value) => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => CameraScreen(camera: value.first))));
+                    },
+                  
+                )), 
+                IconButton(
+                  icon: ImageIcon(AssetImage('assets/images/setting.png'), size:64),
+                  onPressed: () {},)
+        ]),
+           
+        body: 
+            GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: intialLocation, 
+                zoom: 15,
+                ),
+              
+              // add markers
+              markers: {
+                Marker(
+                  markerId: const MarkerId("marker1"),
+                  position: const LatLng(49.299999, -123.139999),
+                  draggable: false,
+                  icon: markerIconVisited,
+                  onTap: () {
+                    _showDialogVisited(context);
+                  }
+                ),
+
+                Marker(
+                  markerId: const MarkerId("marker2"),
+                  position: const LatLng(49.2807, -123.169),
+                  icon: markerIconUnvisited,
+                ),
+
+                Marker(
+                  markerId: const MarkerId("marker3"),
+                  position: const LatLng(49.2609, -123.200093),
+                  icon: markerIconUnvisited,
+                  onTap: () {
+                    _showDialogUnvisited(context);
+                  }
+                )
               }
+
             ),
-
-            Marker(
-              markerId: const MarkerId("marker2"),
-              position: const LatLng(49.2807, -123.169),
-              icon: markerIconUnvisited,
-            ),
-
-            Marker(
-              markerId: const MarkerId("marker3"),
-              position: const LatLng(49.2609, -123.200093),
-              icon: markerIconUnvisited,
-            )
-          }
-
-        ),
       );
   }
 }
